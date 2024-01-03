@@ -36,7 +36,7 @@ int main()
 			uchar g = pointer_input[x * 3 + 1];
 			uchar r = pointer_input[x * 3 + 2];
 
-			pointer_output[x] = (r + g + b) / 3.0;
+			pointer_output[x] = (b + g + r) / 3.0;
 		}
 	}
 	imshow("color", img_color);
