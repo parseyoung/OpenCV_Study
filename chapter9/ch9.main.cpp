@@ -1,3 +1,4 @@
+// OpenCV Image Pixel //
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
@@ -54,7 +55,7 @@ void mouse_callback(int event, int x, int y, int flags, void* userdata)
 int main()
 {
 
-	//���� ĸ�� �ʱ�ȭ
+	//ºñµð¿À Ä¸ÃÄ ÃÊ±âÈ­
 	VideoCapture cap(0);
 	if (!cap.isOpened()) 
 	{
