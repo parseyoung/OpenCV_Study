@@ -4,7 +4,7 @@
 using namespace cv;
 using namespace std;
 
-// Contour ¿µ¿ª ³»¿¡ ÅØ½ºÆ® , vector<Point> : 2D°ø°£¿¡¼­ ¿©·¯ Á¡ÀÇ ÁÂÇ¥ ÀúÀå °¡´É µ¿Àû¹è¿­
+// Contour ì˜ì—­ ë‚´ì— í…ìŠ¤íŠ¸ , vector<Point> : 2Dê³µê°„ì—ì„œ ì—¬ëŸ¬ ì ì˜ ì¢Œí‘œ ì €ì¥ ê°€ëŠ¥ ë™ì ë°°ì—´
 void setLabel(Mat& image, string str, vector<Point> contour)
 {
 	int fontface = FONT_HERSHEY_SIMPLEX;
@@ -33,36 +33,36 @@ int main(int, char**)
 
 	cvtColor(img_input, img_gray, COLOR_BGR2GRAY);
 
-	// ÀÌÁøÈ­ ÀÌ¹ÌÁö·Î º¯È¯
+	// ì´ì§„í™” ì´ë¯¸ì§€ë¡œ ë³€í™˜
 	Mat binary_image;
-	// threshold (ÀÔ·Â, Ãâ·Â, ÀÓ°è°ª, ÀÓ°è°ª ÀÌ»ó ½Ã Àû¿ë °ª, flag)
-	// THRESH_BINARY_INV : ÀÓ°è°ª ³ÑÀ¸¸é 0, ±×·¸Áö ¾ÊÀ¸¸é ÃÖ´ë ¹à±â °ª
-	// THRESH_OTSU : ÃÖÀûÈ­µÈ ÀÌÁøÈ­ ÀÓ°è°ª ÀÚµ¿ ¼±ÅÃ, ¼¼¹øÂ° ÀÓ°è°ª ÀÎÀÚ ¹«½Ã
+	// threshold (ì…ë ¥, ì¶œë ¥, ì„ê³„ê°’, ì„ê³„ê°’ ì´ìƒ ì‹œ ì ìš© ê°’, flag)
+	// THRESH_BINARY_INV : ì„ê³„ê°’ ë„˜ìœ¼ë©´ 0, ê·¸ë ‡ì§€ ì•Šìœ¼ë©´ ìµœëŒ€ ë°ê¸° ê°’
+	// THRESH_OTSU : ìµœì í™”ëœ ì´ì§„í™” ì„ê³„ê°’ ìë™ ì„ íƒ, ì„¸ë²ˆì§¸ ì„ê³„ê°’ ì¸ì ë¬´ì‹œ
 	threshold(img_gray, img_gray, 0, 255, THRESH_BINARY_INV | THRESH_OTSU);
 
-	// contour Ã£´Â´Ù
+	// contour ì°¾ëŠ”ë‹¤
 	vector<vector<Point>> contours;
-	// findContours() : ÀÌ¹ÌÁöÀÇ ¿Ü°û¼± Ã£´Â func
-	// findContours(ÀÔ·Â, ÀúÀåº¤ÅÍ, ¿Ü°û¼± Ã£´Â ¹æ¹ı flag, ¿Ü°û¼± Ç¥Çö ¹æ¹ı flag)
-	// RETR_LIST : ¿Ü°û¼±À» Ã£¾Æ ¸®½ºÆ®ÇüÅÂ·Î ¹İÈ¯
-	// CHAIN_APPROX_SIMPLE : ¿Ü°û¼±À» È¿°úÀûÀ¸·Î ¾ĞÃàÇÏ¿© Ç¥Çö
+	// findContours() : ì´ë¯¸ì§€ì˜ ì™¸ê³½ì„  ì°¾ëŠ” func
+	// findContours(ì…ë ¥, ì €ì¥ë²¡í„°, ì™¸ê³½ì„  ì°¾ëŠ” ë°©ë²• flag, ì™¸ê³½ì„  í‘œí˜„ ë°©ë²• flag)
+	// RETR_LIST : ì™¸ê³½ì„ ì„ ì°¾ì•„ ë¦¬ìŠ¤íŠ¸í˜•íƒœë¡œ ë°˜í™˜
+	// CHAIN_APPROX_SIMPLE : ì™¸ê³½ì„ ì„ íš¨ê³¼ì ìœ¼ë¡œ ì••ì¶•í•˜ì—¬ í‘œí˜„
 	findContours(img_gray, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
 
-	// contour ±Ù»çÈ­
+	// contour ê·¼ì‚¬í™”
 	vector<Point2f> approx;
-	// Point2f : ºÎµ¿ ¼Ò¼öÁ¡ ÇüÅÂ
+	// Point2f : ë¶€ë™ ì†Œìˆ˜ì  í˜•íƒœ
 	img_result = img_input.clone();
 
 	for (size_t i = 0; i < contours.size(); i++)
-		// size_t : ¹è¿­ÀÇ ÀÎµ¦½º³ª ¿ä¼Ò °³¼ö¸¦ ³ªÅ¸³»´Âµ¥ »ç¿ëÇÏ´Â ºÎÈ£ ¾ø´Â Á¤¼öÇü
+		// size_t : ë°°ì—´ì˜ ì¸ë±ìŠ¤ë‚˜ ìš”ì†Œ ê°œìˆ˜ë¥¼ ë‚˜íƒ€ë‚´ëŠ”ë° ì‚¬ìš©í•˜ëŠ” ë¶€í˜¸ ì—†ëŠ” ì •ìˆ˜í˜•
 	{
-		// approxPolyDP() : ´Ù°¢Çü ±Ù»çÈ­ func
+		// approxPolyDP() : ë‹¤ê°í˜• ê·¼ì‚¬í™” func
 		approxPolyDP(Mat(contours[i]), approx, arcLength(Mat(contours[i]), true) * 0.02, true);
 		if (fabs(contourArea (Mat(approx))) > 100)
 		{
 			int size = approx.size();
 
-			// contour ±Ù»çÈ­ÇÑ Á÷¼± ±×¸®±â
+			// contour ê·¼ì‚¬í™”í•œ ì§ì„  ê·¸ë¦¬ê¸°
 			if (size % 2 == 0)
 			{
 				line(img_result, approx[0], approx[approx.size() - 1], Scalar(0, 255, 0), 3);
